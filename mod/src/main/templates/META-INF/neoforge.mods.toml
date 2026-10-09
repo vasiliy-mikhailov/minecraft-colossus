@@ -45,9 +45,7 @@ displayName="${mod_name}" #mandatory
 #authors=""
 
 # The description text for the mod (multi line!) (#mandatory)
-description='''
-Colossus walking-model mod (placeholder biped until the real model lands).
-'''
+description='''A walking armoured stone knight (the Colossus) that approaches the nearest player.'''
 
 # The [[mixins]] block allows you to declare your mixin config to FML so that it gets loaded.
 #[[mixins]]

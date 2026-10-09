@@ -16,7 +16,7 @@ ts() { date -u +%H:%M:%S; }
 docker image inspect mc-client-img >/dev/null 2>&1 || \
   docker build -t mc-client-img -f "$ROOT/docker/client.Dockerfile" "$ROOT/docker" </dev/null || exit 1
 echo "$(ts) build recording image (client image + ffmpeg)"
-docker build -t mc-client-live-img - </dev/null <<'DF' >/dev/null || { echo "image build failed"; exit 1; }
+docker build -q -t mc-client-live-img - <<'DF' >/dev/null || { echo "image build failed"; exit 1; }
 FROM mc-client-img
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ffmpeg && rm -rf /var/lib/apt/lists/*
 DF
@@ -64,8 +64,8 @@ rcon time set day
 rcon gamerule doDaylightCycle false
 rcon gamerule doWeatherCycle false
 rcon weather clear
-rcon kill @e[type=colossus:colossus]
-rcon kill @e[tag=colossus_lure]
+rcon kill '@e[type=colossus:colossus]'
+rcon kill '@e[tag=colossus_lure]'
 rcon tp Dev 0.5 -60 0.5 0 -8
 sleep 20   # let chunks mesh on llvmpipe
 X="docker exec -e DISPLAY=:99 mc-client"
@@ -90,7 +90,7 @@ $X import -window root /live/still_04_walking.png </dev/null
 sleep 3
 $X import -window root /live/still_05_walking.png </dev/null
 sleep 6
-rcon data get entity @e[type=colossus:colossus,limit=1] Pos
+rcon data get entity '@e[type=colossus:colossus,limit=1]' Pos
 $X import -window root /live/still_06_close.png </dev/null
 echo "$(ts) waiting for the recording to finish"
 for i in $(seq 1 40); do $X pgrep ffmpeg </dev/null >/dev/null || break; sleep 2; done

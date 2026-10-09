@@ -60,7 +60,7 @@ rcon time set day
 rcon gamerule doDaylightCycle false
 rcon gamerule doWeatherCycle false
 rcon weather clear
-rcon kill @e[type=colossus:colossus]
+rcon kill '@e[type=colossus:colossus]'
 # Camera: stand at (0.5,-60,0.5) looking due south (+Z, yaw 0), pitch -8 (slightly up so the 3-block mob fits).
 rcon tp Dev 0.5 -60 0.5 0 -8
 sleep 15   # let chunks mesh on llvmpipe
@@ -78,12 +78,12 @@ for i in $(seq -w 1 "$N"); do
   $X import -window root "/shots/walk_$i.png" </dev/null
   sleep "$DT"
 done
-rcon data get entity @e[type=colossus:colossus,limit=1] Pos
+rcon data get entity '@e[type=colossus:colossus,limit=1]' Pos
 burst() {  # burst <prefix>
   for i in $(seq -w 1 "$N"); do $X import -window root "/shots/${1}_$i.png" </dev/null; sleep "$DT"; done
 }
 lure() { rcon summon armor_stand "$@" '{Invisible:1b,Marker:1b,NoGravity:1b,Tags:["colossus_lure"]}'; }
-stage_reset() { rcon tp @e[type=colossus:colossus] 0.5 -120 0.5 >/dev/null; rcon kill @e[type=colossus:colossus] >/dev/null; rcon kill @e[tag=colossus_lure] >/dev/null; rcon tp Dev 0.5 -60 0.5 0 -8 >/dev/null; sleep 2; }
+stage_reset() { rcon tp '@e[type=colossus:colossus]' 0.5 -120 0.5 >/dev/null; rcon kill '@e[type=colossus:colossus]' >/dev/null; rcon kill '@e[tag=colossus_lure]' >/dev/null; rcon tp Dev 0.5 -60 0.5 0 -8 >/dev/null; sleep 2; }
 # Side view: mob walks +X (east) along z=5.5 (5 blocks from the camera); Dev faces south, so east is screen-left and the mob is seen in profile
 # facing left, like the reference SIDE view. A lure at x=+14.5 steers it.
 stage_reset
@@ -91,14 +91,14 @@ lure 14.5 -60 5.5
 rcon summon colossus:colossus -12.5 -60 5.5 '{Rotation:[-90f,0f]}'
 sleep 3
 burst side
-rcon data get entity @e[type=colossus:colossus,limit=1] Pos
+rcon data get entity '@e[type=colossus:colossus,limit=1]' Pos
 # Back view: mob walks away from the camera (+Z) toward a lure 30 blocks out.
 stage_reset
 lure 0.5 -60 30.5
 rcon summon colossus:colossus 0.5 -60 3.5 '{Rotation:[0f,0f]}'
 sleep 0.5
 burst back
-rcon data get entity @e[type=colossus:colossus,limit=1] Pos
+rcon data get entity '@e[type=colossus:colossus,limit=1]' Pos
 stage_reset
 docker logs mc-client 2>&1 | grep -iE 'colossus|exception' | grep -v DEBUG | tail -20 || true
 rcon kick Dev >/dev/null || true; sleep 2   # clean disconnect (no netty reset in server log)
