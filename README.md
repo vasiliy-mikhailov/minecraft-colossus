@@ -16,7 +16,7 @@ The client is the NeoForge dev client, running headless on Xvfb with Mesa llvmpi
 
 1. Install Minecraft 1.21.1 with NeoForge 21.1.x (tested on 21.1.256).
 2. Get `colossus-1.0.0.jar`, either from the **colossus-jar** artifact of the latest
-   [Build](../../actions/workflows/build.yml) run or by building it yourself (below).
+   [Build](https://github.com/vasiliy-mikhailov/minecraft-colossus/actions/workflows/build.yml) run or by building it yourself (below).
 3. Drop the jar into `mods/`. On a server, put it in the server's `mods/` too, since the model and renderer are client-side.
 4. In game: `/summon colossus:colossus ~ ~ ~5`, or use the **Colossus Spawn Egg** from the Spawn Eggs creative tab.
 
