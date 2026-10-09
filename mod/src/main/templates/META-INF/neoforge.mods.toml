@@ -1,4 +1,4 @@
-# Mod metadata for NeoForge. ${...} placeholders are filled from gradle.properties by the generateModMetadata task.
+# Mod metadata for NeoForge. The placeholders are filled from gradle.properties by the generateModMetadata task.
 modLoader="javafml"
 loaderVersion="${loader_version_range}"
 license="${mod_license}"
