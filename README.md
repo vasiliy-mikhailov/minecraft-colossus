@@ -4,6 +4,10 @@ A NeoForge mod that adds the **Colossus**: a 3¼-block-tall armoured stone knigh
 eye slits, gold-trimmed plate, chainmail arms and a stone sword. It walks up to the nearest player and stops about
 3 blocks away. It is not hostile, so it also works on Peaceful. It never spawns naturally: summon it or use the spawn egg.
 
+**How it was made:** [docs/HOW_IT_WAS_MADE.md](docs/HOW_IT_WAS_MADE.md) covers the whole route from a front/side/back
+turnaround image to this walking mob. It describes the approach and tools, each step with the numbers used, how the
+walk animation works, how the in-game footage was verified, and how to do the same for your own character.
+
 ![The Colossus walking up to the player in Minecraft 1.21.1, F3 debug overlay on](docs/colossus_ingame.gif)
 
 The clip was recorded in-game with `record_video.sh` and trimmed to 14 s ([MP4](docs/colossus_ingame.mp4)). The GIF
@@ -143,7 +147,7 @@ mod/                  NeoForge 1.21.1 mod (ModDevGradle, Java 21), mod id `colos
   src/main/java/com/colossus/client/   ColossusModel, ColossusRenderer, ColossusEyesLayer, ColossusClient
   src/main/resources/assets/colossus/  textures, lang, spawn-egg item model
 model/                Blockbench project, textures, offline previews, Python generator
-docs/                 in-game recording (GIF + MP4) and screenshots from the harness
+docs/                 HOW_IT_WAS_MADE.md (approach + tools), in-game recording (GIF + MP4), screenshots
 build.sh  server_up.sh  client_shoot.sh  record_video.sh  server_down.sh  docker/client.Dockerfile
 ```
 
