@@ -4,12 +4,22 @@ A NeoForge mod that adds the **Colossus**: a 3-block-tall armoured stone knight 
 slits, gold-trimmed plate, chainmail arms and a stone sword. It walks up to the nearest player and stops about 3 blocks
 away. It is not hostile, so it also spawns on Peaceful.
 
+![The Colossus walking up to the player in Minecraft 1.21.1, F3 debug overlay on](docs/colossus_ingame.gif)
+
+The clip above was recorded in-game ([MP4](docs/colossus_ingame.mp4)). The player types
+`/summon colossus:colossus ~ ~ ~12` in chat, and the Colossus walks up. The F3 overlay is the game reporting on itself:
+`Minecraft 1.21.1 (21.1.256/neoforge)` in the top left, the renderer on the right, and, with the crosshair on the mob,
+**Targeted Entity `colossus:colossus`**.
+
+![F3: Minecraft 1.21.1 (21.1.256/neoforge), Targeted Entity colossus:colossus](docs/screenshots/f3_targeted_entity.png)
+
 | Front | Side | Back |
 |---|---|---|
 | ![front](docs/screenshots/walk_6.png) | ![side](docs/screenshots/side_4.png) | ![back](docs/screenshots/back_4.png) |
 
-These are in-game frames from the Minecraft 1.21.1 client with NeoForge 21.1.256, captured by the test harness below.
-The client is the NeoForge dev client, running headless on Xvfb with Mesa llvmpipe software rendering.
+All of these are in-game captures from the Minecraft 1.21.1 client with NeoForge 21.1.256, made by the test harness
+below. The client is the NeoForge dev client (`./gradlew runClient`), running headless on Xvfb with Mesa llvmpipe
+software rendering. That is why F3 shows `llvmpipe` instead of a GPU. The HUD is hidden with F1 in the three frames above.
 `docs/screenshots/` holds the full bursts: `walk_*` (toward the camera), `side_*` (profile) and `back_*` (walking away).
 
 ## Play
@@ -50,6 +60,7 @@ walking. Nothing is published on host ports; the client and server talk over a p
 ./build.sh
 ./server_up.sh                  # NeoForge 1.21.1 server 'mc-server' + self-test -> prints SELFTEST PASS
 ./client_shoot.sh shots/run1    # dev client 'mc-client' joins as Dev; front/side/back walk bursts -> shots/run1/
+./record_video.sh shots/video   # F3 on, /summon typed in chat, 40 s x11grab recording -> shots/video/raw.mp4 + stills
 ./server_down.sh                # remove both containers (the world is kept)
 ```
 
@@ -59,7 +70,7 @@ walking. Nothing is published on host ports; the client and server talk over a p
   The scene is staged over RCON, the HUD is hidden with `xdotool key F1`, and frames are grabbed with `import -window root`.
 - **State:** the Gradle home, server world and RCON password live under `$COLOSSUS_DATA` (default `./.data`, gitignored).
   The first run downloads the NeoForge server, game assets and Gradle dependencies, a few GB in total.
-- **Container names:** `mc-server`, `mc-client`, network `mc-test`, image `mc-client-img` (built from `docker/client.Dockerfile`).
+- **Container names:** `mc-server`, `mc-client`, network `mc-test`, images `mc-client-img` (built from `docker/client.Dockerfile`) and `mc-client-live-img` (adds ffmpeg, for `record_video.sh`).
 
 ## Model
 
@@ -94,8 +105,8 @@ mod/                  NeoForge 1.21.1 mod (ModDevGradle, Java 21), mod id `colos
   src/main/java/com/colossus/client/   ColossusModel, ColossusRenderer, ColossusEyesLayer, ColossusClient
   src/main/resources/assets/colossus/  textures, lang, spawn-egg item model
 model/                Blockbench project, textures, offline previews, Python generator
-docs/screenshots/     in-game frames from the harness
-build.sh  server_up.sh  client_shoot.sh  server_down.sh  docker/client.Dockerfile
+docs/                 in-game recording (GIF + MP4) and screenshots from the harness
+build.sh  server_up.sh  client_shoot.sh  record_video.sh  server_down.sh  docker/client.Dockerfile
 ```
 
 ## License
