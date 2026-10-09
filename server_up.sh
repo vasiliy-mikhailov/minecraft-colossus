@@ -29,7 +29,7 @@ docker run -d --name mc-server --network mc-test --restart no \
   -v "$JAR:/mods/colossus.jar:ro" \
   itzg/minecraft-server:java21 >/dev/null
 echo "mc-server starting (NeoForge $NEO, jar $(basename "$JAR"))"
-for i in $(seq 1 180); do
+for _ in $(seq 1 180); do
   docker logs mc-server 2>&1 | grep -q 'Done (' && break
   docker ps -q -f name='^mc-server$' | grep -q . || { docker logs --tail 50 mc-server; echo "mc-server died" >&2; exit 1; }
   sleep 5

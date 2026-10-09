@@ -6,8 +6,8 @@ eye slits, gold-trimmed plate, chainmail arms and a stone sword. It walks up to 
 
 ![The Colossus walking up to the player in Minecraft 1.21.1, F3 debug overlay on](docs/colossus_ingame.gif)
 
-The clip above was recorded in-game with `record_video.sh`. It is trimmed to 14 s ([MP4](docs/colossus_ingame.mp4)),
-and the GIF is downscaled to 640×360. The player types `/summon colossus:colossus ~ ~ ~12` in chat, and the Colossus
+The clip was recorded in-game with `record_video.sh` and trimmed to 14 s ([MP4](docs/colossus_ingame.mp4)). The GIF
+above is a 9.6 s excerpt of it, downscaled to 640×360, starting as the typed command is sent. The player types `/summon colossus:colossus ~ ~ ~12` in chat, and the Colossus
 walks up. The F3 overlay is the game reporting on itself:
 - `Minecraft 1.21.1 (21.1.256/neoforge)` in the top left;
 - the renderer on the right;
@@ -115,7 +115,8 @@ Colossus walking. Nothing is published on host ports; the client and server talk
 `model/generator/` is the Python (NumPy + Pillow) source of the model:
 - **Geometry:** the 37 boxes are written by hand in `build.py`, and the pixel-art face patterns in `design.py`.
 - **Reference sheet:** a front | side | back turnaround (`ref.png`, **not included**) supplies the per-texel shading, the
-  sword-blade texels and the comparison overlays. Every script reads `ref.png` on import and fails without it.
+  sword-blade texels and the comparison overlays. `build.py` reads `ref.png` on import, so `export.py` and `preview.py`,
+    which import it, fail without the sheet.
   - The sheet must be 794×422 and match the `VIEW` calibration in `build.py`: 7 px per model unit; centres at x=146.5
     (front), 386 (side) and 626.5 (back); ground at y≈412–415.
   - A different sheet only re-shades this knight. It will not model a new character.

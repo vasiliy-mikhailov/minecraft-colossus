@@ -93,7 +93,7 @@ sleep 6
 rcon data get entity '@e[type=colossus:colossus,limit=1]' Pos
 $X import -window root /live/still_06_close.png </dev/null
 echo "$(ts) waiting for the recording to finish"
-for i in $(seq 1 40); do $X pgrep ffmpeg </dev/null >/dev/null || break; sleep 2; done
+for _ in $(seq 1 40); do $X pgrep ffmpeg </dev/null >/dev/null || break; sleep 2; done
 tail -1 "$OUT/ffmpeg.log"
 grep -E 'Dev|Summoned|colossus' "$BASE/server/logs/latest.log" | tail -8
 rcon kick Dev >/dev/null || true; sleep 2   # clean disconnect
