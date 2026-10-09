@@ -29,12 +29,14 @@ docker run -d --name mc-server --network mc-test --restart no \
   -v "$JAR:/mods/colossus.jar:ro" \
   itzg/minecraft-server:java21 >/dev/null
 echo "mc-server starting (NeoForge $NEO, jar $(basename "$JAR"))"
+# grep reads all input (no -q): with pipefail, grep -q would SIGPIPE docker logs and look like a miss.
+ready() { docker logs mc-server 2>&1 | grep -c 'Done (' >/dev/null; }
 for _ in $(seq 1 180); do
-  docker logs mc-server 2>&1 | grep -q 'Done (' && break
-  docker ps -q -f name='^mc-server$' | grep -q . || { docker logs --tail 50 mc-server; echo "mc-server died" >&2; exit 1; }
+  ready && break
+  [ -n "$(docker ps -q -f name='^mc-server$')" ] || { docker logs --tail 50 mc-server; echo "mc-server died" >&2; exit 1; }
   sleep 5
 done
-docker logs mc-server 2>&1 | grep -q 'Done (' || { echo "timeout waiting for server" >&2; exit 1; }
+ready || { echo "timeout waiting for server" >&2; exit 1; }
 echo "server ready"
 rcon() { docker exec mc-server rcon-cli -- "$@" </dev/null | sed "s/\x1b\[[0-9;]*m//g"; }
 [ "${1:-}" = "--no-selftest" ] && exit 0
