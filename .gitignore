@@ -1,0 +1,9 @@
+# local harness state: gradle home, server world, RCON secret
+.data/
+# screenshots written by client_shoot.sh
+shots/
+# model generator: your reference sheet + generated output
+model/generator/ref.png
+model/generator/out/
+__pycache__/
+.DS_Store
